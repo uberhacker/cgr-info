@@ -16,7 +16,7 @@ for N in $NAMES; do
     NW=${#N}
   fi
 done
-VW=7
+VW=8
 for V in $VERSIONS; do
   if [ $VW -lt ${#V} ]; then
     VW=${#V}
@@ -26,6 +26,6 @@ i=0
 printf "%-${NW}s %-${VW}s %s\n" " Name" " Version" " Description"
 printf "%-${NW}s %-${VW}s %s\n" " ----" " -------" " -----------"
 for D in $DESCRIPTIONS; do
-  printf "%-${NW}s %-${VW}s  %s\n" ${NAMES_ARRAY[$i]} ${VERSIONS_ARRAY[$i]} $D
+  printf "%-${NW}s %-${VW}s %s\n" ${NAMES_ARRAY[$i]} ${VERSIONS_ARRAY[$i]} $D
   i=$(expr $i + 1)
 done
