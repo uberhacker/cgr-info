@@ -1,0 +1,31 @@
+#!/bin/bash
+CGR=$(command -v cgr)
+if [ -z $CGR ]; then
+  echo "Unable to locate cgr.  To install, execute 'composer global require consolidation/cgr'."
+  exit 1
+fi
+IFS=$'\n'
+NAMES=$(cgr info | grep "^name     :" | cut -d':' -f2)
+NAMES_ARRAY=( $NAMES )
+VERSIONS=$(cgr info | grep "^versions :" | cut -d'*' -f2)
+VERSIONS_ARRAY=( $VERSIONS )
+DESCRIPTIONS=$(cgr info | grep "^descrip\. :" | cut -d':' -f2)
+NW=0
+for N in $NAMES; do
+  if [ $NW -lt ${#N} ]; then
+    NW=${#N}
+  fi
+done
+VW=0
+for V in $VERSIONS; do
+  if [ $VW -lt ${#V} ]; then
+    VW=${#V}
+  fi
+done
+i=0
+printf "%-${NW}s %-${VW}s %s\n" " Name" " Version" " Description"
+printf "%-${NW}s %-${VW}s %s\n" " ----" " -------" " -----------"
+for D in $DESCRIPTIONS; do
+  printf "%-${NW}s %-${VW}s %s\n" ${NAMES_ARRAY[$i]} ${VERSIONS_ARRAY[$i]} $D
+  i=$(expr $i + 1)
+done
